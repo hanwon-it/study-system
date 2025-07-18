@@ -1,31 +1,22 @@
-# SpringBoot + MyBatis + JWT 회원 시스템
+# REST API 프로젝트
 
-## 🔧 기술 스택
-- Java 17
-- Spring Boot 3.x
-- MyBatis
-- MySQL
-- JWT (로그인 인증)
-- HTML + JavaScript (SPA 방식)
+이 프로젝트는 Spring Boot 3, MyBatis, MySQL, Spring Security를 사용하여  
+회원가입과 로그인 기능을 구현한 REST API 서버입니다.
 
-## 📦 프로젝트 기능
-- 회원가입 / 로그인 / 로그아웃
-- 로그인 사용자만 게시글 작성 가능
-- 게시글 목록, 수정, 삭제 (본인만)
-- 사용자 정보 조회 및 수정
+## 주요 기술 스택
 
-## 💻 실행 방법
-1. MySQL에 `database.sql` 실행 (테이블 및 초기 데이터 생성)
-2. `application.properties` 파일 직접 생성 (Git에 포함 안 됨)
-3. `./gradlew bootRun` 명령어로 실행
-4. 브라우저에서 `http://localhost:8080` 접속
+- Spring Boot 3
+- MyBatis (ORM)
+- MySQL (데이터베이스)
+- Spring Security (인증 및 권한 관리)
+- BCrypt (비밀번호 암호화)
+- JWT (JSON Web Token) 인증 예정
 
-## 🔐 application.properties 예시 (Git에 포함 금지)
-```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/your_db_name
-spring.datasource.username=root
-spring.datasource.password=your_password
-spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+## 실행 방법
 
-mybatis.mapper-locations=classpath:mapper/**/*.xml
-jwt.secret=yourSecretKey
+1. MySQL 데이터베이스 설정
+2. `application.properties` 에 DB 연결 정보 수정
+3. Gradle 빌드 및 실행
+
+```bash
+./gradlew bootRun
