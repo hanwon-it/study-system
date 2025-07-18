@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <title>로그아웃</title>
+</head>
+<body>
+<h1>로그아웃</h1>
+<button id="logoutBtn">로그아웃 하기</button>
+
+<script>
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert('로그인되어 있지 않습니다.');
+            return;
+        }
+        try {
+            const res = await fetch('/api/member/logout', {
+                method: 'POST',
+                headers: { 'Authorization': token }
+            });
+            if (res.ok) {
+                alert('로그아웃 성공!');
+                localStorage.removeItem('token');
+            } else {
+                alert('로그아웃 실패!');
+            }
+        } catch(err) {
+            alert('오류 발생: ' + err.message);
+        }
+    });
+</script>
+</body>
+</html>

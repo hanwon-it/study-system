@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>로그인 페이지</title>
+</head>
+<body>
+<h1>로그인</h1>
+<form id="loginForm">
+    <label>
+        아이디:
+        <input type="text" id="username" name="username" required />
+    </label><br/><br/>
+    <label>
+        비밀번호:
+        <input type="password" id="password" name="password" required />
+    </label><br/><br/>
+    <button type="submit">로그인</button>
+</form>
+<br/>
+<button id="goRegister">회원가입 하러 가기</button>
+
+<script>
+    async function login(username, password) {
+        try {
+            const res = await fetch('http://localhost:8080/api/member/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
+
+            const text = await res.text();
+            console.log('서버 응답:', text);
+
+            if (res.ok) {
+                let token;
+                try {
+                    const data = JSON.parse(text);
+                    token = data.token || data;
+                } catch {
+                    token = text; // JSON 파싱 실패 시 토큰 문자열로 간주
+                }
+
+                if (token) {
+                    localStorage.setItem('token', token);
+                    alert('로그인 성공!');
+                    window.location.href = 'posts.html';
+                } else {
+                    alert('로그인 실패: 서버에서 토큰을 받지 못했습니다.');
+                }
+            } else {
+                alert('로그인 실패: ' + text);
+            }
+        } catch (err) {
+            alert('로그인 중 오류 발생: ' + err.message);
+        }
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value.trim();
+        login(username, password);
+    });
+
+    document.getElementById('goRegister').addEventListener('click', () => {
+        window.location.href = 'register.html';
+    });
+</script>
+</body>
+</html>
